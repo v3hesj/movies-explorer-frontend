@@ -9,7 +9,7 @@ const ErrNotFound = () => {
         <p className='err-not-found__title'>404</p>
         <p className='err-not-found__description'>Страница не найдена</p>
       </div>
-      <button type='button' className='err-not-found__button' onClick={() => navigate('/')}>Назад</button>
+      <button type='button' className='err-not-found__button' onClick={() => navigate(-1)}>Назад</button>
     </div>
   )
 }

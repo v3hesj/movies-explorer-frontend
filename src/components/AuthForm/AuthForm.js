@@ -4,7 +4,7 @@ import logo from '../../images/logo.svg';
 import Preloader from "../Preloader/Preloader";
 
 function AuthForm({ onSubmit, isLoading, isValid, title, formName, children, button, rout, textLink, questionAuth }) {
-
+  console.log(isValid)
   return (
     <section className="auth-form">
       <div className="auth-form__container">
@@ -15,7 +15,7 @@ function AuthForm({ onSubmit, isLoading, isValid, title, formName, children, but
       </div>
       <form className='form' name={`form-${formName}`} onSubmit={onSubmit}>
         {children}
-        <button className="form__button"  type="submit">{button}</button>
+        <button className={`form__button ${!isValid && 'form__button_disabled'}`}  type="submit" disabled={!isValid}> {button} </button>
       </form>
       <p className='auth-form__question'>{questionAuth}
         <Link to={`/${rout}`} className='auth-form__link'>{textLink}</Link>

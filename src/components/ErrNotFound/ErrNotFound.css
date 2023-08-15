@@ -6,7 +6,8 @@
   height: 100vh;
 
   box-sizing: border-box;
-  padding: 80px;
+  /* padding: 80px; */
+  /* padding: calc(50vh - 280px) 0; */
 }
 
 .err-not-found__block {
@@ -50,19 +51,26 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  padding: 0 0 60px;
 }
 
 @media screen and (max-width: 900px) {
   .err-not-found {
+    /* padding: 222px; */
+    /* padding: calc(50vh - 280px) 0; */
+  }
+  .err-not-found__button {
     padding: 222px;
+  }
+}
+@media screen and (max-height: 800px) {
+  .err-not-found__button {
+    padding: 0 0 60px;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .err-not-found {
-    padding: 30px;
-  }
-
   .err-not-found__title {
     font-size: 80px;
   }
@@ -70,6 +78,8 @@
   .err-not-found__description {
     font-size: 12px;
     padding: 10px 0 0;
-
+  }
+  .err-not-found__button {
+    padding: 0 0 30px;
   }
 }

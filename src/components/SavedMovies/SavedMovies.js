@@ -6,7 +6,7 @@ const SavedMovies = () => {
   return(
     <main>
       <SearchForm />
-       {/* <MoviesCardList /> */}
+      <MoviesCardList />
     </main>
   )
 }

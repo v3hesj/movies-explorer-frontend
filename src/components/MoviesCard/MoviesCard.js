@@ -16,7 +16,20 @@ import cardImg14 from '../../images/cards/card14.svg'
 import cardImg15 from '../../images/cards/card15.svg'
 import cardImg16 from '../../images/cards/card16.svg'
 
+import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import classNames from 'classnames';
+
 const MoviesCard = () => {
+  const { pathname } = useLocation();
+  const [isLikeClick, setIsLikeClick] = useState(false);
+  const handleLikeClick = () => setIsLikeClick(!isLikeClick);
+
+  const buttonLikeClass = classNames('card__button-like', {
+    'card__button-like_delete': pathname === '/saved-movies',
+    'card__button-like_selected': pathname === '/movies' && isLikeClick
+  });
+
   return (
     <>
       <li className='card__item'>
@@ -31,8 +44,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>33 слова о дизайне</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -51,8 +65,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Киноальманах «100 лет дизайна»</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -71,8 +86,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>В погоне за Бенкси</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -91,8 +107,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Баския: Взрыв реальности</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -111,8 +128,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Бег это свобода</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>

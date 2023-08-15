@@ -22,11 +22,19 @@ function App() {
         <Routes>
             <Route 
               path='/signin'
-              element={<Login />}
+              element={
+                <Login
+                  isValid = {false}
+                />
+              }
             />
             <Route 
               path='/signup'
-              element={<Register />}
+              element={
+                <Register
+                  isValid = {true}
+                />
+              }
             />
           <Route
             path='*'
