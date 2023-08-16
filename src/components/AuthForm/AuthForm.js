@@ -14,7 +14,9 @@ function AuthForm({ onSubmit, isLoading, isValid, title, formName, children, but
         <h1 className='auth-form__title'>{title}</h1>
       </div>
       <form className='form' name={`form-${formName}`} onSubmit={onSubmit}>
-        {children}
+        <div className={`form__wraper-${formName}`}>
+          {children}
+        </div>
         <button className={`form__button ${!isValid && 'form__button_disabled'}`}  type="submit" disabled={!isValid}> {button} </button>
       </form>
       <p className='auth-form__question'>{questionAuth}

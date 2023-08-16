@@ -24,6 +24,7 @@
   /* margin: 0 70px; */
   border-bottom: 1px solid #424242;
   max-width: 100%;
+  padding-bottom: 19px;
 }
 
 .portfolio__link {
@@ -34,8 +35,8 @@
   line-height: 50px;
   letter-spacing: -1.2px;
 
-  padding: 20px 0 19px;
-
+  padding: 20px 0 0;
+  cursor: pointer;
   text-decoration: none;
 
   display: flex;

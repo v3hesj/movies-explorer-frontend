@@ -38,39 +38,43 @@ const Register = ({ handleRegister, isLoading, isValid } ) => {
       <label htmlFor="name" className="auth-form__label">Имя
         <input
           className="auth-form__input"
-          value={ formValue.name || 'Name' }
+          value={ formValue.name || '' }
           required
           id="name"
           name="name"
           type="text"
           onChange={handleChange} 
           minLength="3"
-          maxLength="40" />
+          maxLength="40"
+          placeholder="Ваше имя" />
       </label>     
       
       <label htmlFor="email" className="auth-form__label">E-mail
         <input
           className="auth-form__input"
-          value={ formValue.email || 'pochta@yandex.ru' }
+          value={ formValue.email || '' }
           required
           id="email"
           name="email"
           type="email"
           onChange={handleChange} 
           minLength="8"
-          maxLength="40" />
+          maxLength="40"
+          placeholder="Введите email" />
       </label>
       
       <label htmlFor="password" className="auth-form__label" >Пароль
         <input
           className="auth-form__input"
-          value={ formValue.password || '••••••••••••••' }
+          value={ formValue.password || '' }
           required
           id="password"
           name="password"
           type="password"
           onChange={handleChange} 
-          minLength="6" maxLength="20" />
+          minLength="6"
+          maxLength="20"
+          placeholder='Введите пароль' />
       </label>
 
     </AuthForm> 

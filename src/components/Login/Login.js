@@ -36,14 +36,15 @@ const Login = ({ handleLogin, isLoading, isValid } ) => {
       <label htmlFor="email" className="auth-form__label">E-mail
         <input
           className="auth-form__input"
-          value={ formValue.email || 'pochta@yandex.ru|' }
+          value={ formValue.email || '' }
           required
           id="email"
           name="email"
           type="email"
           onChange={handleChange} 
           minLength="8"
-          maxLength="40" />
+          maxLength="40"
+          placeholder='pochta@yandex.ru' />
       </label>
       
       <label htmlFor="password" className="auth-form__label" >Пароль

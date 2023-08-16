@@ -149,8 +149,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Книготорговцы</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -169,8 +170,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Когда я думаю о Германии ночью</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -189,8 +191,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Gimme Danger: История Игги и The Stooges</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -209,8 +212,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Дженис: Маленькая девочка грустит</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -229,8 +233,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Соберись перед прыжком</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -249,8 +254,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Пи Джей Харви: A dog called money</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -269,8 +275,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>По волнам: Искусство звука в кино</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -289,8 +296,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Рудбой</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -309,8 +317,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Скейт — кухня</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -329,8 +338,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Война искусств</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>
@@ -349,8 +359,9 @@ const MoviesCard = () => {
           <div className="card__content">
             <p className='card__title'>Зона</p>
             <button
-              className='card__button-like'
+              className={buttonLikeClass}
               type='button'
+              onClick={handleLikeClick}
             />
           </div>
           <p className='card__duration'>1ч 42м</p>

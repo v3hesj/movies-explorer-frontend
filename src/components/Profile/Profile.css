@@ -14,6 +14,8 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  margin: 0;
 }
 
 .profile__form {
@@ -34,6 +36,7 @@
   border: 0;
   /* margin-bottom: 220px; */
   padding: 0;
+  margin: 0 0 220px;
 }
 
 .profile__block {
@@ -84,7 +87,7 @@
   background-color: #202020;
   border: 0;
   padding: 0 0 16px;
-  margin: auto 0 0;
+  margin: 0;
 
   transition: .3s ease-in;
 }
@@ -117,7 +120,9 @@
 @media screen and (max-width: 900px) {
   .profile {
     padding: 236px 0 269px;
-    /* height: calc(100vh - 236px); */
+  }
+  .profile__form .profile__block:nth-child(2) {
+    margin: 0 0 210px;
   }
 
   .profile__form {
@@ -128,6 +133,10 @@
 @media screen and (max-width: 500px) {
   .profile {
     padding: 70px 0 40px;
+  }
+
+  .profile__form .profile__block:nth-child(2) {
+    margin: 0 0 379px;
   }
 
   .profile__block {
