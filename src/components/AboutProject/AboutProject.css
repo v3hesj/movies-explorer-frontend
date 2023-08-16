@@ -1,0 +1,143 @@
+.about-project {
+
+}
+
+.about-project__block {
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.about-project__title {
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+
+  margin: 0 70px;
+  padding: 110px 0 23px;
+  max-width: 100%;
+  border-bottom: 1px solid;
+  border-color: #DADADA;
+}
+
+.about-project__list {
+  padding: 70px 70px 110px;
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+}
+
+.about-project__item {
+  list-style: none;
+}
+
+.about-project__subtitle {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.8px;
+
+  margin: 0;
+  padding: 0;
+}
+
+.about-project__text {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  
+  margin: 26px 0 0;
+  padding: 0;
+}
+
+.about-project__grid {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  padding: 0 70px 110px;
+}
+
+.about-project__cell {
+  margin: 0;
+  padding: 14px 0;
+
+  color: #8B8B8B;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.about-project__cell_color-back {
+  background-color: #3DDC84;
+  padding: 9px 14px;
+
+  color: #000;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.about-project__cell_color-front {
+  background-color: #303030;
+  padding: 9px 14px;
+  
+  color: #FFF;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media screen and (max-width: 900px) {
+  .about-project__title {
+    margin: 0 50px;
+    padding: 90px 0 23px;
+  }
+  .about-project__list {
+    column-gap: 30px;
+    padding: 70px 50px 93px;
+  }
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 22px 0 0;
+  }
+  .about-project__grid {
+    padding: 0 50px 90px;
+    grid-template-columns: 1fr 3.7fr;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .about-project__title {
+    margin: 0 18px;
+    padding: 70px 0 28px;
+  }
+  .about-project__list {
+    column-gap: 30px;
+    padding: 4px 18px 60px;
+    display: block;
+  }
+  .about-project__subtitle{
+    padding: 56px 0 0;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+    margin: 16px 0 0;
+  }
+  .about-project__cell {
+    font-size: 11px;
+    font-weight: 400;
+    padding: 11px 0;
+  }
+  .about-project__grid {
+    padding: 0 18px 59px;
+    grid-template-columns: 1fr 1.84fr;
+  }
+}

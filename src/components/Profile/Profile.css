@@ -1,0 +1,157 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 74px 0 70px;
+  box-sizing: border-box;
+  height: 100%;
+  height: calc(100vh - 74px);
+}
+
+.profile__title {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  margin: 0;
+}
+
+.profile__form {
+  padding-top: 123px;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.profile__form .profile__block {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #424242;
+  margin-bottom: 17px;
+}
+
+.profile__form .profile__block:nth-child(2) {
+  border: 0;
+  /* margin-bottom: 220px; */
+  padding: 0;
+  margin: 0 0 220px;
+}
+
+.profile__block {
+  display: flex;
+  justify-content: space-between;
+  width: 410px;
+}
+
+.profile__label {
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  padding: 0;
+  margin: 0;
+  width: 141px;
+}
+
+.profile__input {
+  width: 100%;
+  
+  color: #FFF;
+  text-align: right;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  background-color: #202020;
+  border: 0;
+  
+  transition: .3s ease-in;
+}
+
+.profile__input:hover {
+  background-color: #3a3a3a;
+}
+
+.profile__button-edit {
+  color: #FFF;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  background-color: #202020;
+  border: 0;
+  padding: 0 0 16px;
+  margin: 0;
+
+  transition: .3s ease-in;
+}
+
+.profile__button-edit:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.profile__button-exit {
+  color: #EE3465;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  background-color: #202020;
+  border: 0;
+  padding: 0;
+
+  transition: .3s ease-in;
+}
+
+.profile__button-exit:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .profile {
+    padding: 236px 0 269px;
+  }
+  .profile__form .profile__block:nth-child(2) {
+    margin: 0 0 210px;
+  }
+
+  .profile__form {
+    padding-top: 96px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile {
+    padding: 70px 0 40px;
+  }
+
+  .profile__form .profile__block:nth-child(2) {
+    margin: 0 0 379px;
+  }
+
+  .profile__block {
+    width: 260px;
+  }
+
+  .profile__form {
+    padding-top: 80px;
+  }
+
+  .profile__button-edit {
+    font-size: 12px;
+  }
+  
+  .profile__button-exit {
+    font-size: 12px;
+  }
+}

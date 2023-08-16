@@ -1,0 +1,134 @@
+ .navigation {
+  width: 100%;
+ }
+
+ .navigation__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-left: 44px;
+ }
+
+ .navigation__links {
+  display: flex;
+  /* justify-content: space-between; */
+  align-self: center;
+ }
+
+ .navigation__link {
+  color: #FFF;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+
+  text-decoration: none;
+  padding-right: 16px;
+ }
+
+ .navigation__to-profile {
+  color: #FFF;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+  text-decoration: none;
+  
+  padding-right: 70px;
+
+  display: flex;
+  align-items: center;
+    
+  transition: .3s ease-in;
+ }
+
+ .navigation__to-profile:hover {
+  opacity: 0.7;
+ }
+
+ .navigation__acc {
+  background-color: #313131;
+  padding: 8px;
+  border-radius: 50%;
+  margin-left: 7px;
+ }
+
+ .navigation__link_visible {
+  display: none;
+ }
+
+ .navigation__link_active {
+  border: 0;
+  font-weight: 500;
+ }
+
+ @media screen and (max-width: 900px) {
+  .navigation {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100%;
+    visibility: hidden;
+    opacity: 1;
+    z-index: 1;
+   }
+  .navigation__open {
+    visibility: visible;
+    opacity: 1;  
+  }
+  .navigation__block {
+    background-color: #202020;
+    position: fixed;
+    top: 0;
+    right: 0;
+    max-width: 520px;
+    width: 100%;
+    height: 100%;
+    padding: 159px 20px 90px;
+    box-sizing: border-box;
+
+    flex-direction: column;
+   }
+
+   .navigation__links {
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+   }
+
+   .navigation__link {
+    font-size: 18px;
+    line-height: normal;
+
+    padding: 0 0 4px;
+    margin: 0;
+   }
+
+   .navigation__to-profile {
+    padding: 0;
+   }
+
+   .navigation__link_visible {
+    display: block;
+   }
+
+   .navigation__link_active {
+    border-bottom: 2px solid white;
+   }
+}
+
+@media screen and (max-width: 500px) {
+  .navigation__block {
+    padding: 144px 10px 46px;
+   }
+
+  .navigation__links {
+    gap: 15px;
+  }
+
+  .navigation__link {
+    padding: 0 0 7px;
+   }
+}
