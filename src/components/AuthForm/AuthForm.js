@@ -4,7 +4,6 @@ import logo from '../../images/logo.svg';
 import Preloader from "../Preloader/Preloader";
 
 function AuthForm({ onSubmit, isLoading, isValid, title, formName, children, button, rout, textLink, questionAuth }) {
-  console.log(isValid)
   return (
     <section className="auth-form">
       <div className="auth-form__container">

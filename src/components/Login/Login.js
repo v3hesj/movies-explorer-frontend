@@ -1,24 +1,14 @@
 import AuthForm from '../AuthForm/AuthForm';
+import useFormWithValidation from '../../utils/FormWithValidation';
 import React, { useState } from 'react';
 
-const Login = ({ handleLogin, isLoading, isValid } ) => {
-  const [formValue, setFormValue] = useState({
-    email: '',
-    password: ''
-  })
+const Login = ({ handleLogin, isLoading } ) => {
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    handleLogin(formValue.email,formValue.password);
+    handleLogin(values.email, values.password);
   }
 
   return (
@@ -36,7 +26,7 @@ const Login = ({ handleLogin, isLoading, isValid } ) => {
       <label htmlFor="email" className="auth-form__label">E-mail
         <input
           className="auth-form__input"
-          value={ formValue.email || '' }
+          value={ values.email || '' }
           required
           id="email"
           name="email"
@@ -45,18 +35,20 @@ const Login = ({ handleLogin, isLoading, isValid } ) => {
           minLength="8"
           maxLength="40"
           placeholder='pochta@yandex.ru' />
+        <span className='form__error'>{errors.email}</span>
       </label>
       
       <label htmlFor="password" className="auth-form__label" >Пароль
         <input
           className="auth-form__input"
-          value={ formValue.password || '' }
+          value={ values.password || '' }
           required
           id="password"
           name="password"
           type="password"
           onChange={handleChange} 
           minLength="6" maxLength="20" />
+        <span className='form__error'>{errors.password}</span>
       </label>
 
     </AuthForm> 

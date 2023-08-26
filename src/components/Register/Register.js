@@ -1,28 +1,16 @@
 import './Register.css';
 import AuthForm from '../AuthForm/AuthForm';
+import useFormWithValidation from '../../utils/FormWithValidation';
 import React, { useState } from 'react';
 
-const Register = ({ handleRegister, isLoading, isValid } ) => {
-  const [formValue, setFormValue] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
+const Register = ({ handleRegister, isLoading } ) => {
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value
-    });
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    handleRegister(formValue.name, formValue.email,formValue.password);
+    handleRegister(values.username, values.email, values.password);
   }
-
   return (
     <AuthForm
       onSubmit={handleSubmit}
@@ -38,21 +26,23 @@ const Register = ({ handleRegister, isLoading, isValid } ) => {
       <label htmlFor="name" className="auth-form__label">Имя
         <input
           className="auth-form__input"
-          value={ formValue.name || '' }
+          value={ values.username || '' }
           required
           id="name"
-          name="name"
+          name="username"
           type="text"
           onChange={handleChange} 
           minLength="3"
           maxLength="40"
-          placeholder="Ваше имя" />
+          placeholder="Ваше имя" 
+          pattern='^[a-zA-ZА-Яа-яЁё\s\-]+$' />
+        <span className='form__error'>{errors.username}</span>
       </label>     
       
       <label htmlFor="email" className="auth-form__label">E-mail
         <input
           className="auth-form__input"
-          value={ formValue.email || '' }
+          value={ values.email || '' }
           required
           id="email"
           name="email"
@@ -61,12 +51,13 @@ const Register = ({ handleRegister, isLoading, isValid } ) => {
           minLength="8"
           maxLength="40"
           placeholder="Введите email" />
+        <span className='form__error'>{errors.email}</span>
       </label>
       
       <label htmlFor="password" className="auth-form__label" >Пароль
         <input
           className="auth-form__input"
-          value={ formValue.password || '' }
+          value={ values.password || '' }
           required
           id="password"
           name="password"
@@ -75,6 +66,7 @@ const Register = ({ handleRegister, isLoading, isValid } ) => {
           minLength="6"
           maxLength="20"
           placeholder='Введите пароль' />
+        <span className='form__error'>{errors.password}</span>
       </label>
 
     </AuthForm> 
