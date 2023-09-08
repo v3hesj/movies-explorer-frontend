@@ -7,7 +7,7 @@ import Navigation from '../Navigation/Navigation';
 import Burger from '../Burger/Burger';
 import classNames from 'classnames';
 
-const Header = ({ loggedIn }) => {
+const Header = ({ isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { pathname } = useLocation();
@@ -19,7 +19,7 @@ const Header = ({ loggedIn }) => {
   return(
     <header className={headerClass}>
       <div className='header__block'>
-        {loggedIn
+        {isLoggedIn
           ? 
             <div className='header__movies'>
               <Link to='/' className='header__logo-link'>

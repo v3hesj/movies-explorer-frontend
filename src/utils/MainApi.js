@@ -63,7 +63,7 @@ class MainApi {
   }
 
   checkToken (token) {
-    return fetch(`${this._url}/users/me`,{
+    return fetch(`${this._baseUrl}/users/me`,{
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -75,11 +75,11 @@ class MainApi {
   }
 
   setToken() {
-    this._headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+    this._headers.authorization = `Bearer ${localStorage.getItem('jwt')}`;
   }
 
   register (name, email, password) {
-    return fetch(`${this._url}/signup`, {
+    return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -91,7 +91,7 @@ class MainApi {
   }
 
   authorize (email, password) {
-    return fetch(`${this._url}/signin`, {
+    return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

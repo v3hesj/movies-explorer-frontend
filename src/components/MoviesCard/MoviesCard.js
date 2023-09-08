@@ -1,373 +1,97 @@
 import './MoviesCard.css';
-import cardImg1 from '../../images/cards/card1.svg'
-import cardImg2 from '../../images/cards/card2.svg'
-import cardImg3 from '../../images/cards/card3.svg'
-import cardImg4 from '../../images/cards/card4.svg'
-import cardImg5 from '../../images/cards/card5.svg'
-import cardImg6 from '../../images/cards/card6.svg'
-import cardImg7 from '../../images/cards/card7.svg'
-import cardImg8 from '../../images/cards/card8.svg'
-import cardImg9 from '../../images/cards/card9.svg'
-import cardImg10 from '../../images/cards/card10.svg'
-import cardImg11 from '../../images/cards/card11.svg'
-import cardImg12 from '../../images/cards/card12.svg'
-import cardImg13 from '../../images/cards/card13.svg'
-import cardImg14 from '../../images/cards/card14.svg'
-import cardImg15 from '../../images/cards/card15.svg'
-import cardImg16 from '../../images/cards/card16.svg'
-
+import React, { useState, useContext, useEffect }  from 'react';
 import { useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
+import { mainApi } from '../../utils/MainApi';
 import classNames from 'classnames';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import { imagesUrl, apiTranslator } from '../../utils/utilsApi'
 
-const MoviesCard = () => {
+const MoviesCard = ({ movie, saveState }) => {
+  const { savedMovies, setSavedMovies } = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  const [isLikeClick, setIsLikeClick] = useState(false);
-  const handleLikeClick = () => setIsLikeClick(!isLikeClick);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [mainApiId, setMainApiId] = useState('');
+  const { nameRU, trailerLink, image, duration } = movie;
+
+  useEffect(() => {
+    setIsSaved(saveState.isSaved);
+    setMainApiId(saveState.id);
+    console.log('saveState=',saveState);
+  }, [saveState]);
+
+  const handleSaveClick = () => {
+    return isSaved
+      ? deleteMovieClick()
+      : saveMovieClick()
+  }
+
+  const getTimeFromDuration = (time) =>{
+    const hours = Math.trunc(time / 60);
+    const minutes = time % 60;
+    return `${hours}ч ${minutes}м`;
+  }
 
   const buttonLikeClass = classNames('card__button-like', {
     'card__button-like_delete': pathname === '/saved-movies',
-    'card__button-like_selected': pathname === '/movies' && isLikeClick
+    'card__button-like_selected': pathname === '/movies' && isSaved
   });
+
+  const saveMovieClick = () => {
+    // console.log('save', apiTranslator(movie))
+    setIsLoading(true);
+    mainApi
+      .addSaveMovie(apiTranslator(movie))
+      .then((dataMovies) => {
+        setSavedMovies([...savedMovies, dataMovies]);
+        setIsSaved(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const deleteMovieClick = () => {
+    setIsLoading(true);
+    // console.log('delete id = ',mainApiId)
+    mainApi
+      .deleteSaveMovie(mainApiId)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((dataMovies) => {
+          return !(dataMovies._id === mainApiId);
+        }));
+        setIsSaved(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   return (
     <>
       <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
+        <a className='card__link' href={trailerLink} target='blank'>
           <img
             className='card__img'
-            src={cardImg1}
-            alt='33 слова о дизайне'
+            src={`${imagesUrl}/${movie.image.url}`}
+            alt={nameRU}
           />
         </a>
         <div className='card__wrapper'>
           <div className="card__content">
-            <p className='card__title'>33 слова о дизайне</p>
+            <p className='card__title'>{nameRU}</p>
             <button
               className={buttonLikeClass}
               type='button'
-              onClick={handleLikeClick}
+              onClick={handleSaveClick}
+              disabled={isLoading}
             />
           </div>
-          <p className='card__duration'>1ч 42м</p>
+          <p className='card__duration'>{getTimeFromDuration(duration)}</p>
         </div>
       </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg2}
-            alt='Киноальманах «100 лет дизайна»'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Киноальманах «100 лет дизайна»</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg3}
-            alt='В погоне за Бенкси'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>В погоне за Бенкси</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg4}
-            alt='Баския: Взрыв реальности'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Баския: Взрыв реальности</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg5}
-            alt='Бег это свобода'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Бег это свобода</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg6}
-            alt='Книготорговцы'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Книготорговцы</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg7}
-            alt='Когда я думаю о Германии ночью'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Когда я думаю о Германии ночью</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg8}
-            alt='Gimme Danger: История Игги и The Stooges'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Gimme Danger: История Игги и The Stooges</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg9}
-            alt='Дженис: Маленькая девочка грустит'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Дженис: Маленькая девочка грустит</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg10}
-            alt='Соберись перед прыжком'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Соберись перед прыжком</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg11}
-            alt='Пи Джей Харви: A dog called money'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Пи Джей Харви: A dog called money</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg12}
-            alt='По волнам: Искусство звука в кино'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>По волнам: Искусство звука в кино</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg13}
-            alt='Рудбой'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Рудбой</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg14}
-            alt='Скейт — кухня'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Скейт — кухня</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg15}
-            alt='Война искусств'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Война искусств</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
-      <li className='card__item'>
-        <a className='card__link' href='/' target='blank'>
-          <img
-            className='card__img'
-            src={cardImg16}
-            alt='Зона'
-          />
-        </a>
-        <div className='card__wrapper'>
-          <div className="card__content">
-            <p className='card__title'>Зона</p>
-            <button
-              className={buttonLikeClass}
-              type='button'
-              onClick={handleLikeClick}
-            />
-          </div>
-          <p className='card__duration'>1ч 42м</p>
-        </div>
-      </li>
-
     </>
     
   )

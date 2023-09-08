@@ -36,7 +36,8 @@
   border: 0;
   /* margin-bottom: 220px; */
   padding: 0;
-  margin: 0 0 220px;
+  /* margin: 0 0 220px; */
+  margin: 0 0 189px;
 }
 
 .profile__block {
@@ -76,6 +77,50 @@
   background-color: #3a3a3a;
 }
 
+.profile__error {
+  max-width: 410px;
+  height: 14px;
+  padding: 0;
+  margin: 0;
+
+  color: #FF004C;
+  text-align: center;
+  font-family: Inter;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.profile__button-save {
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  padding: 13px 0 15px;
+  margin: 20px 0 0;
+
+  /* margin-top: clamp(70px, 100%, 221px);; */
+  background-color: #3456F3;
+  border-radius: 3px;
+  border: 0;
+
+  transition: .3s ease-in;
+}
+
+.profile__button-save:hover {
+  opacity: 0.8;
+  cursor: pointer;
+ }
+
+.profile__button-save_disabled {
+  color: #C2C2C2;
+  background: #F8F8F8;
+}
+
 .profile__button-edit {
   color: #FFF;
   text-align: center;
@@ -86,7 +131,7 @@
 
   background-color: #202020;
   border: 0;
-  padding: 0 0 16px;
+  padding: 17px 0 16px;
   margin: 0;
 
   transition: .3s ease-in;
