@@ -93,7 +93,7 @@ function App() {
     setIsLoggedIn(false);
     setIsLoading(false);
   }
-
+// console.log('appisLoading=',isLoading);
   return (
     <CurrentUserContext.Provider value={{ savedMovies, setSavedMovies, currentUser, setCurrentUser }}>
       <div className="app">

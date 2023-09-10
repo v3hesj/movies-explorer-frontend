@@ -10,9 +10,9 @@ const MoviesCard = ({ movie, saveState }) => {
   const { savedMovies, setSavedMovies } = useContext(CurrentUserContext);
   const { pathname } = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(saveState.isSaved);
   const { nameRU, trailerLink, image, duration } = movie;
-  // console.log(savedMovies);
+
   const handleSaveClick = () => {
     return isSaved
       ? deleteMovieClick()
@@ -48,11 +48,11 @@ const MoviesCard = ({ movie, saveState }) => {
 
   const deleteMovieClick = () => {
     setIsLoading(true);
-    console.log('delete ', 'saveState.id = ', saveState.id);
+    // console.log('delete ', 'saveState.id = ', saveState.id);
     mainApi
       .deleteSaveMovie(saveState.id)
       .then(() => {
-        setSavedMovies(savedMovies.filter((dataMovies) => {
+        setSavedMovies(savedMovies.filter((dataMovies) => {console.log(dataMovies._id);
           return !(dataMovies._id === saveState.id);
         }));
         setIsSaved(false);

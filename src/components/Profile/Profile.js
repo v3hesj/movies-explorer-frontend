@@ -1,6 +1,6 @@
 import './Profile.css';
 import useFormWithValidation from '../../utils/FormWithValidation';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
 import { mainApi } from '../../utils/MainApi';
@@ -11,12 +11,16 @@ const Profile = ({ handleSignout }) => {
 
   const userContext = useContext(CurrentUserContext);
   const [userData, setUserData] = useState(userContext.currentUser);
+  
   const initValues = {
     username: userData.name,
     email: userData.email,
   };
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({ initValues });
 
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({ initValues });
+  
+  console.log('userData=',userData,' userContext= ',userContext);
+  
   function handleEdit(e) {
     e.preventDefault();
     setIsEdit(true);
@@ -33,7 +37,7 @@ const Profile = ({ handleSignout }) => {
       name: values.username,
       email: values.email,
     });
-    console.log(values.username,values.email);
+    // console.log(values.username,values.email);
     mainApi.updateUserInfo({
       name: values.username,
       email: values.email,
@@ -50,7 +54,7 @@ const Profile = ({ handleSignout }) => {
       })
       .finally(() => setIsLoading(false))
   }
-  
+  // console.log(userData)
   return (
     <section className='profile'>
       <h1 className='profile__title'>Привет, {`${userData.name}!`}</h1>

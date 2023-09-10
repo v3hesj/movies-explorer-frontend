@@ -8,13 +8,11 @@ import { sizeWindow, rowCard, rowCardMore } from '../../utils/constants';
 const MoviesCardList = ({ searchMovies }) => {
   const { savedMovies } = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-  // const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
-  // console.log('savedMovies=',savedMovies,' localSearchMovies= ',localSearchMovies);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isButtonMore, setIsButtonMore] = useState(false);
   const [listMoviesPart, setListMoviesPart] = useState(0);
   const [listMoviesPartMore, setListMoviesPartMore] = useState(0);
-
+//  console.log(searchMovies);
   useEffect (() => {
     window.addEventListener('resize', () => {
       setTimeout(() => setWindowWidth(window.innerWidth), 1000);
@@ -73,7 +71,7 @@ const MoviesCardList = ({ searchMovies }) => {
             <MoviesCard
               key={movie.movieId}
               movie={movie}
-              saveState={{ isSaved: true, id: movie.id }}
+              saveState={{ isSaved: true, id: movie._id }}
             />
           ))
         : '';
