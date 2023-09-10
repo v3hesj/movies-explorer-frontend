@@ -12,6 +12,7 @@ const SavedMovies = () => {
   const [isKeyWord, setIsKeyWord] = useState('');
   const [isShortMovies, setIsShortMovies] = useState(false);
 
+  console.log(savedMovies);
   useEffect(() => {
     setSearchMovies(savedMovies);
     getSearchMovies(isKeyWord, isShortMovies);

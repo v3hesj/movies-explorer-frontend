@@ -8,7 +8,8 @@ import { sizeWindow, rowCard, rowCardMore } from '../../utils/constants';
 const MoviesCardList = ({ searchMovies }) => {
   const { savedMovies } = useContext(CurrentUserContext);
   const { pathname } = useLocation();
-
+  // const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
+  // console.log('savedMovies=',savedMovies,' localSearchMovies= ',localSearchMovies);
   const [windowWidth, setWindowWidth] = useState(window.clientWidth);
   const [isButtonMore, setIsButtonMore] = useState(false);
   const [listMoviesPart, setListMoviesPart] = useState(0);
@@ -66,7 +67,7 @@ const MoviesCardList = ({ searchMovies }) => {
           .slice(0, listMoviesPart)
           .map((movie) => (
             <MoviesCard
-              key={movie.id}
+              key={movie.movieId}
               movie={movie}
               saveState={checkSaveStatus(movie)}
             />
@@ -78,7 +79,7 @@ const MoviesCardList = ({ searchMovies }) => {
         ? searchMovies
           .map((movie) => (
             <MoviesCard
-              key={movie.id}
+              key={movie.movieId}
               movie={movie}
               saveState={{ isSaved: true, id: movie.id }}
             />
@@ -88,7 +89,7 @@ const MoviesCardList = ({ searchMovies }) => {
   }
 
   const checkSaveStatus = (movie) => {
-    const selectMovie = savedMovies.find((film) => film.movieId === movie.id);
+    const selectMovie = savedMovies.find((film) => film.movieId === movie.movieId);
     // console.log('selectMovie=',selectMovie);
     return selectMovie
       ? { isSaved: true, id: selectMovie._id }

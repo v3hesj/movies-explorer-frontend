@@ -1,7 +1,7 @@
 export const imagesUrl = 'https://api.nomoreparties.co';
 
-export const apiTranslator  = (movie) => {
-  const newMovie = {
+export default function apiTranslator(movie) {
+  return {
       country: movie.country,
       director: movie.director,
       duration: movie.duration,
@@ -14,6 +14,5 @@ export const apiTranslator  = (movie) => {
       nameRU: movie.nameRU,
       nameEN: movie.nameEN,
     }
-    return newMovie;
   }
 

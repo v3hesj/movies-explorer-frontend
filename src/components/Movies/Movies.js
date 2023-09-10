@@ -5,63 +5,50 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import { moviesApi } from '../../utils/MoviesApi';
 import { shortFilmDuration } from '../../utils/constants';
+import apiTranslator from '../../utils/utilsApi';
 
 const Movies = () => {
+  const [allMovies, setAllMovies] = useState(null);
+  
   const [isLoading, setIsLoading] = useState(false);
-  const [searchMovies, setSearchMovies] = useState([]);
-  const [isKeyWord, setIsKeyWord] = useState('');
-  const [isShortMovies, setIsShortMovies] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
+  const localSearchKeyWord = localStorage.getItem('localKeyWord') || '';
+  const ckboxIsShort = JSON.parse(localStorage.getItem('checkboxIsShort')) || false;
   
+  const [localMovies, setLocalMovies] = useState(localSearchMovies);
+  const [localKeyWord, setLocalKeyWord] = useState(localSearchKeyWord);
+  const [checkboxIsShort, setCheckboxIsShort] = useState(ckboxIsShort);
+
   useEffect(() => {
-    const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
-    const localSearchKeyWord = localStorage.getItem('localKeyWord') || '';
-    // const checkboxIsShort = JSON.parse(localStorage.getItem('checkboxIsShort')) || false;
-    
+    localStorage.setItem('localMovies', JSON.stringify(localMovies));
+    localStorage.setItem('localKeyWord', localKeyWord);
+    localStorage.setItem('checkboxIsShort', checkboxIsShort);
+  }, [localMovies, localKeyWord, checkboxIsShort]);
 
-    if (localSearchMovies && localSearchKeyWord) {
-      // console.log(JSON.parse(localSearchMovies));
-      setSearchMovies(localSearchMovies);
-      setIsKeyWord(localSearchKeyWord);
-      // setIsShortMovies(true);
+  useEffect(() => {
+    if (allMovies) {
+      const moviesFilter = filterKeyMovies(allMovies, localKeyWord, checkboxIsShort);
+      setLocalMovies(moviesFilter);
     }
-  },[]);
+  },[allMovies, localKeyWord, checkboxIsShort])
 
-  const getSearchMovies = (keyWord, isShortMovies) => {
-    const storageAllMovies = JSON.parse(localStorage.getItem('localAllMovies')) || [];
-    if (!storageAllMovies.length) {
-      console.log(keyWord, isShortMovies);
-      setIsLoading(true);
-      moviesApi
-        .getMovies()
-        .then((localAllMovies) => {
-          // console.log(localAllMovies);
-          // localStorage.setItem('localAllMovies', JSON.stringify(localAllMovies));
-          const filterSearchMovies = keyWord
-            ? filterKeyMovies(localAllMovies, keyWord, isShortMovies)
-            : [];
-          setSearchMovies(filterSearchMovies);
-          localStorage.setItem('localAllMovies', JSON.stringify(filterSearchMovies));
-          // (!filterSearchMovies)
-            //Здесь написать обработчик ошибки
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false)
-        });
-    } else {
-      const filterSearchMovies = keyWord
-        ? filterKeyMovies(storageAllMovies, keyWord, isShortMovies)
-        : [];
-        setSearchMovies(filterSearchMovies);
-        localStorage.setItem('localAllMovies', JSON.stringify(filterSearchMovies));
-        // (!filterSearchMovies)
-          //Здесь написать обработчик ошибки
-    }
-  };
-  
+  const getSearchMovies = () => {
+    setIsLoading(true);
+    moviesApi
+      .getMovies()
+      .then((allMovies) => {
+        allMovies = allMovies.map(apiTranslator);
+        setAllMovies(allMovies);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false)
+      });
+  }
   const filterKeyMovies = (localAllMovies, keyword, isShortMovies) => {
     // console.log('localAllMovies=', localAllMovies, ' keyword=', keyword, 'isShortMovies=',isShortMovies);
     const filterMovies = localAllMovies.filter((movie) => {
@@ -79,15 +66,16 @@ const Movies = () => {
   
   const handleCheckboxClick = (checked) => {
     // localStorage.setItem('checkboxIsShort', checked);
-    setIsShortMovies(checked);
-    getSearchMovies(isKeyWord, checked);
-    // console.log(checked)
+    setCheckboxIsShort(checked);
+    getSearchMovies();
+    // getSearchMovies(isKeyWord, checked);
   };
 
   const handleSearchMovies = (word) => {
     localStorage.setItem('localKeyWord', word);
-    setIsKeyWord(word);
-    getSearchMovies(word, isShortMovies);
+    setLocalKeyWord(word);
+    getSearchMovies();
+    // getSearchMovies(word, isShortMovies);
   };
 
   return(
@@ -102,7 +90,7 @@ const Movies = () => {
         :
           (errorMessage !== '') 
             ? <span className='movies__error'>{errorMessage}</span>
-            : <MoviesCardList searchMovies={searchMovies}/>
+            : <MoviesCardList searchMovies={localMovies}/>
       } 
     </main>
   )
