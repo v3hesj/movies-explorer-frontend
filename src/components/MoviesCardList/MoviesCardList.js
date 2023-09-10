@@ -10,32 +10,24 @@ const MoviesCardList = ({ searchMovies }) => {
   const { pathname } = useLocation();
   // const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
   // console.log('savedMovies=',savedMovies,' localSearchMovies= ',localSearchMovies);
-  const [windowWidth, setWindowWidth] = useState(window.clientWidth);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isButtonMore, setIsButtonMore] = useState(false);
   const [listMoviesPart, setListMoviesPart] = useState(0);
   const [listMoviesPartMore, setListMoviesPartMore] = useState(0);
 
   useEffect (() => {
     window.addEventListener('resize', () => {
-      setTimeout(() => setWindowWidth(window.clientWidth), 1000);
+      setTimeout(() => setWindowWidth(window.innerWidth), 1000);
     })
-
-    switch(windowWidth) {
-      case (windowWidth > sizeWindow.desk):
-        setListMoviesPart(rowCard.desk);
-        setListMoviesPartMore(rowCardMore.desk);
-        break;
-      case (windowWidth <= sizeWindow.desk && windowWidth > sizeWindow.tab):
-        setListMoviesPart(rowCard.tab);
-        setListMoviesPartMore(rowCardMore.tab);
-        break;
-      case (windowWidth <= sizeWindow.tab && windowWidth > sizeWindow.mobile):
-        setListMoviesPart(rowCard.mobile);
-        setListMoviesPartMore(rowCardMore.mobile);
-        break;
-      default: 
-        setListMoviesPart(rowCard.mobile);
-        setListMoviesPartMore(rowCardMore.mobile);
+    if (windowWidth > sizeWindow.desk) {
+      setListMoviesPart(rowCard.desk);
+      setListMoviesPartMore(rowCardMore.desk);
+    } else if (windowWidth <= sizeWindow.desk && windowWidth > sizeWindow.tab) {
+      setListMoviesPart(rowCard.tab);
+      setListMoviesPartMore(rowCardMore.tab);
+    } else if (windowWidth <= sizeWindow.tab && windowWidth > sizeWindow.mobile) {
+      setListMoviesPart(rowCard.mobile);
+      setListMoviesPartMore(rowCardMore.mobile);
     }
 
     return () =>

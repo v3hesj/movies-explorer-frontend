@@ -6,13 +6,13 @@ export const sizeWindow = {
 
 export const rowCard = {
   desk: 16,
-  tab: 12,
+  tab: 8,
   mobile: 5,
 };
 
 export const rowCardMore = {
   desk: 4,
-  tab: 3,
+  tab: 2,
   mobile: 1,
 };
 

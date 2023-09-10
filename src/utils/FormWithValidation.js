@@ -9,7 +9,7 @@ function useFormWithValidation() {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-
+    // console.log(name,value);
     if(name === "username")
       target.validity.patternMismatch
         ? target.setCustomValidity('Поле должно содержать только латиницу, кириллицу, пробел или дефис')

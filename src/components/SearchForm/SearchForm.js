@@ -48,7 +48,7 @@ const SearchForm = ({ handleSearchMovies, handleCheckboxClick, isLoading}) => {
               id='search'
               value={values.search || ''}
               onChange={handleChange}
-              minLength='5'
+              minLength='1'
               maxLength='60'
               placeholder='Фильм'
               required

@@ -33,7 +33,7 @@ const Profile = ({ handleSignout }) => {
       name: values.username,
       email: values.email,
     });
-
+    console.log(values.username,values.email);
     mainApi.updateUserInfo({
       name: values.username,
       email: values.email,
@@ -50,7 +50,7 @@ const Profile = ({ handleSignout }) => {
       })
       .finally(() => setIsLoading(false))
   }
-
+  
   return (
     <section className='profile'>
       <h1 className='profile__title'>Привет, {`${userData.name}!`}</h1>

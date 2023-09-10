@@ -12,6 +12,7 @@ import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ErrNotFound from '../ErrNotFound/ErrNotFound';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import './App.css';
 
@@ -131,38 +132,38 @@ function App() {
           <Route 
             path='/profile'
             element={
-              <>
+              <ProtectedRoute isLoading={isLoading} isLoggedIn={isLoggedIn}>
                 <Header
                  isLoggedIn = {isLoggedIn}
                 />
                 <Profile
                   handleSignout={handleSignout}
                 />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
             path='/saved-movies'
             element={
-              <>
+              <ProtectedRoute isLoading={isLoading} isLoggedIn={isLoggedIn}>
                 <Header
                   isLoggedIn = {isLoggedIn}
                 />
                 <SavedMovies />
                 <Footer />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
             path='/movies'
             element={
-              <>
+              <ProtectedRoute isLoading={isLoading} isLoggedIn={isLoggedIn}>
                 <Header
                   isLoggedIn = {isLoggedIn}
                 />
                 <Movies />
                 <Footer />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
