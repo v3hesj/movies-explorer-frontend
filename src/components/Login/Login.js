@@ -1,9 +1,9 @@
 import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from '../../utils/FormWithValidation';
-import React, { useState } from 'react';
+import React from 'react';
 
 const Login = ({ currentError, handleLogin, isLoading } ) => {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,10 +1,10 @@
 import './Register.css';
 import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from '../../utils/FormWithValidation';
-import React, { useState } from 'react';
+import React from 'react';
 
 const Register = ({ currentError, handleRegister, isLoading } ) => {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const handleSubmit = (e) => {
     e.preventDefault();

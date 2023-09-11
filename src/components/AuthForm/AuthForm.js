@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import './AuthForm.css';
 import logo from '../../images/logo.svg';
-import Preloader from "../Preloader/Preloader";
 
 function AuthForm({ currentError, onSubmit, isLoading, isValid, title, formName, children, button, rout, textLink, questionAuth }) {
   return (

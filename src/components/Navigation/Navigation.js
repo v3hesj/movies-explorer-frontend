@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import './Navigation.css';
 import acc from '../../images/acc.svg';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
 const Navigation = ({ isMenuOpen, setIsMenuOpen }) => {
   const handleCloseClick = () => setIsMenuOpen(!isMenuOpen);
