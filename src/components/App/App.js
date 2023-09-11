@@ -13,16 +13,19 @@ import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
 import ErrNotFound from '../ErrNotFound/ErrNotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { RequestError } from '../../utils/error';
+import { RequestConfirm } from '../../utils/error';
 
 import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
+  const [currentError, setCurrentError]= useState('');
+
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -32,7 +35,9 @@ function App() {
           setCurrentUser(user);
           setSavedMovies(elem.movie.filter((film) => film.owner === user._id));
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => {
+          console.error(err);
+        })
         .finally(() => {})
     }
   }, [isLoggedIn]);
@@ -46,7 +51,7 @@ function App() {
           setIsLoggedIn(true);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     } 
     else setIsLoggedIn(false);
@@ -54,17 +59,28 @@ function App() {
 
   const handleLogin = (email, password) => {
     setIsLoading(true);
+    setCurrentError('');
     mainApi
       .authorize(email, password)
       .then((res) => {
+        setCurrentError(RequestConfirm.SUCCESS);
         localStorage.setItem('jwt', res.userToken);
         // console.log(localStorage.getItem('jwt'));
         setIsLoggedIn(true);
-        setIsSuccess(true); 
       })
       .catch((err) => {
-        console.log(err)
-        setIsSuccess(false); 
+        let message;
+        switch (err.message) {
+          case '401':
+            message = RequestError.SIGNIN_ERR_401;
+            break;
+          case '500':
+            message = RequestError.SERVER_ERR_500;
+            break;
+          default:
+            message = RequestError.SIGNIN_DEFAULT;
+        }
+        setCurrentError(message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -76,11 +92,23 @@ function App() {
     mainApi
       .register(name, email, password)
       .then(() => {
+        setCurrentError(RequestConfirm.SUCCESS_REGISTER);
         handleLogin(email, password);
+        setCurrentError('');
       })
       .catch((err) => {
-        console.log(err)
-        setIsSuccess(false); 
+        let message;
+        switch (err.message) {
+          case '409':
+            message = RequestError.SIGNUP_ERR_409;
+            break;
+          case '500':
+            message = RequestError.SERVER_ERR_500;
+            break;
+          default:
+            message = RequestError.SIGNUP_DEFAULT;
+        }
+        setCurrentError(message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -93,7 +121,7 @@ function App() {
     setIsLoggedIn(false);
     setIsLoading(false);
   }
-// console.log('appisLoading=',isLoading);
+
   return (
     <CurrentUserContext.Provider value={{ savedMovies, setSavedMovies, currentUser, setCurrentUser }}>
       <div className="app">
@@ -119,6 +147,7 @@ function App() {
                     <Register
                       handleRegister={handleRegister}
                       isLoading={isLoading}
+                      currentError={currentError}
                     />
                   :
                     <Navigate to='/movies' />

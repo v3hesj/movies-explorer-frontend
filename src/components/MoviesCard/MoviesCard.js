@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 import classNames from 'classnames';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import { imagesUrl } from '../../utils/utilsApi'
 
 const MoviesCard = ({ movie, saveState }) => {
   const { savedMovies, setSavedMovies } = useContext(CurrentUserContext);
@@ -12,6 +11,10 @@ const MoviesCard = ({ movie, saveState }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(saveState.isSaved);
   const { nameRU, trailerLink, image, duration } = movie;
+
+  useEffect(() => {
+    setIsSaved(saveState.isSaved);
+  }, [saveState]);
 
   const handleSaveClick = () => {
     return isSaved
@@ -29,7 +32,7 @@ const MoviesCard = ({ movie, saveState }) => {
     'card__button-like_delete': pathname === '/saved-movies',
     'card__button-like_selected': (pathname === '/movies') && isSaved
   });
-
+  // console.log(isSaved,'savedMovies=',savedMovies)
   const saveMovieClick = () => {
     // console.log('save movie = ', movie)
     setIsLoading(true);
@@ -41,7 +44,7 @@ const MoviesCard = ({ movie, saveState }) => {
         setIsSaved(true);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       })
       .finally(() => setIsLoading(false));
   };
@@ -52,13 +55,13 @@ const MoviesCard = ({ movie, saveState }) => {
     mainApi
       .deleteSaveMovie(saveState.id)
       .then(() => {
-        setSavedMovies(savedMovies.filter((dataMovies) => {console.log(dataMovies._id);
+        setSavedMovies(savedMovies.filter((dataMovies) => {
           return !(dataMovies._id === saveState.id);
         }));
         setIsSaved(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       })
       .finally(() => setIsLoading(false));
   };

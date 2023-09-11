@@ -2,7 +2,7 @@ import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from '../../utils/FormWithValidation';
 import React, { useState } from 'react';
 
-const Login = ({ handleLogin, isLoading } ) => {
+const Login = ({ currentError, handleLogin, isLoading } ) => {
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   const handleSubmit = (e) => {
@@ -13,6 +13,7 @@ const Login = ({ handleLogin, isLoading } ) => {
 
   return (
     <AuthForm
+      currentError={currentError}
       onSubmit={handleSubmit}
       isLoading={isLoading }
       isValid={isValid}

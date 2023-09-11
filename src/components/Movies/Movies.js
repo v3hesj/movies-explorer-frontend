@@ -6,12 +6,13 @@ import Preloader from '../Preloader/Preloader';
 import { moviesApi } from '../../utils/MoviesApi';
 import { shortFilmDuration } from '../../utils/constants';
 import apiTranslator from '../../utils/utilsApi';
+import {SearchMessageErr} from '../../utils/error'
 
 const Movies = () => {
   const [allMovies, setAllMovies] = useState(null);
   
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [currentError, setCurrentError]= useState('');
 
   const localSearchMovies = JSON.parse(localStorage.getItem('localMovies')) || [];
   const localSearchKeyWord = localStorage.getItem('localKeyWord') || '';
@@ -44,6 +45,7 @@ const Movies = () => {
       })
       .catch((err) => {
         console.log(err);
+        setCurrentError(SearchMessageErr.SEARCH_ERROR);
       })
       .finally(() => {
         setIsLoading(false)
@@ -60,6 +62,11 @@ const Movies = () => {
     // console.log(filterMovies)
     if (isShortMovies) {
       return filterMovies.filter((movie) => movie.duration <= shortFilmDuration);
+    }
+    if (filterMovies.length === 0) {
+      setCurrentError(SearchMessageErr.NOT_FOUND);
+    } else {
+      setCurrentError('')
     }
     return filterMovies;
   }
@@ -84,12 +91,13 @@ const Movies = () => {
         isLoading={isLoading}
         handleSearchMovies={handleSearchMovies}
         handleCheckboxClick={handleCheckboxClick}
+        searchErr = {currentError}
       />
       {isLoading
         ? <Preloader />
         :
-          (errorMessage !== '') 
-            ? <span className='movies__error'>{errorMessage}</span>
+          (currentError !== '') 
+            ? <span className='movies__error'>{currentError}</span>
             : <MoviesCardList searchMovies={localMovies}/>
       } 
     </main>

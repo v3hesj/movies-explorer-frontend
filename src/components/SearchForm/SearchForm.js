@@ -4,8 +4,9 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import useFormWithValidation from '../../utils/FormWithValidation';
 import { useEffect }  from 'react';
 import { useLocation } from 'react-router-dom';
+import {SearchMessageErr} from '../../utils/error'
 
-const SearchForm = ({ handleSearchMovies, handleCheckboxClick, isLoading}) => {
+const SearchForm = ({ handleSearchMovies, handleCheckboxClick, isLoading, searchErr}) => {
   const { pathname } = useLocation();
   const {
     values, setValues, handleChange, isValid, setIsValid,
@@ -26,9 +27,9 @@ const SearchForm = ({ handleSearchMovies, handleCheckboxClick, isLoading}) => {
     
     isValid
       ? handleSearchMovies(values.search) 
-      : console.log('Введите слово')
+      : searchErr(SearchMessageErr.NO_KEY)
   };
-
+  // console.log('SearchForm=',values);
 
   return (
     <section className='search'>

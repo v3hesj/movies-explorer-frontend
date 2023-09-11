@@ -3,7 +3,7 @@ import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from '../../utils/FormWithValidation';
 import React, { useState } from 'react';
 
-const Register = ({ handleRegister, isLoading } ) => {
+const Register = ({ currentError, handleRegister, isLoading } ) => {
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   const handleSubmit = (e) => {
@@ -13,6 +13,7 @@ const Register = ({ handleRegister, isLoading } ) => {
   }
   return (
     <AuthForm
+      currentError={currentError}
       onSubmit={handleSubmit}
       isLoading={isLoading }
       isValid={isValid}

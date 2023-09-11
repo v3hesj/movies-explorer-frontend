@@ -1,69 +1,72 @@
 import './Profile.css';
 import useFormWithValidation from '../../utils/FormWithValidation';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
 import { mainApi } from '../../utils/MainApi';
+import { RequestError } from '../../utils/error';
+import { RequestConfirm } from '../../utils/error';
 
 const Profile = ({ handleSignout }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const userContext = useContext(CurrentUserContext).currentUser;
-  
+  const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
+  const [currentError, setCurrentError]= useState('');
+
   const initValues = {
-    username: userContext.name,
-    email: userContext.email,
+    username: currentUser.name,
+    email: currentUser.email,
   };
 
-
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation({ initValues });
-  
-  // console.log('userContext=',userContext,' userContext= ',userContext);
-  
+  const { values, handleChange, errors, isValid } = useFormWithValidation({ initValues });
+    
   function handleEdit(e) {
     e.preventDefault();
     setIsEdit(true);
   }
-  // if (!isEdit) {
-  //   values.username = initValues.username;
-  //   values.email = initValues.email;
-  //   console.log(values.username,values.email)
-  // }
 
   const buttonSaveActive = () => {
     return ((values.username !== initValues.username || values.email !== initValues.email) && isValid && !isLoading)
   }
-
-  console.log(values.username,initValues.username,'isEdit=',isEdit,'isLoading=',isLoading);
   
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
+    setCurrentError('');
 
     mainApi.updateUserInfo({
       name: values.username,
       email: values.email,
     })
       .then((data) => {
-        // console.log(data.user.name)
-        // values.username = data.user.name;
-        // values.email = initValues.email;
         setIsEdit(false);
-        resetForm({
+        setCurrentUser({
           username: data.user.name,
           email: data.user.email,
         })
+        setCurrentError(RequestConfirm.SUCCESS);
       })
       .catch((err) => {
-        console.log(err)
+        let message;
+        switch (err.message) {
+          case '409':
+            message = RequestError.UPDATE_ERR_409;
+            break;
+          case '500':
+            message = RequestError.SERVER_ERR_500;
+            break;
+          default:
+            message = RequestError.UPDATE_DEFAULT;
+        }
+        setCurrentError(message);
       })
       .finally(() => setIsLoading(false))
   }
-  // console.log(userContext.name)
+
   return (
     <section className='profile'>
-      <h1 className='profile__title'>Привет, {`${userContext.name}!`}</h1>
+      <h1 className='profile__title'>Привет, {`${currentUser.username || currentUser.name}!`}</h1>
       <form className='profile__form' onSubmit={handleSubmit}>
         <div className='profile__block'>
             <label htmlFor="name" className="profile__label">Имя</label>
@@ -96,7 +99,7 @@ const Profile = ({ handleSignout }) => {
               disabled={isLoading || !isEdit} />
         </div>
         {isLoading ? <Preloader /> : ''}
-        <span className='profile__error'>{errors.username || errors.email}</span>
+        <span className='profile__error'>{currentError}</span>
 
         {isEdit
           ?

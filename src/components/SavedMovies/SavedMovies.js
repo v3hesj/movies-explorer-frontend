@@ -4,10 +4,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { useState, useEffect, useContext } from 'react';
 import { shortFilmDuration } from '../../utils/constants';
+import {SearchMessageErr} from '../../utils/error'
 
 const SavedMovies = () => {
   const { savedMovies } = useContext(CurrentUserContext);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [currentError, setCurrentError] = useState('');
   const [searchMovies, setSearchMovies] = useState([]);
   const [isKeyWord, setIsKeyWord] = useState('');
   const [isShortMovies, setIsShortMovies] = useState(false);
@@ -16,19 +17,19 @@ const SavedMovies = () => {
   useEffect(() => {
     setSearchMovies(savedMovies);
     getSearchMovies(isKeyWord, isShortMovies);
-    (savedMovies)
-      ? setErrorMessage('')
-      : setErrorMessage('Нет сохраненных филльмов');
+    (savedMovies.length === 0)
+      ? setCurrentError(SearchMessageErr.NOT_SAVED)
+      : setCurrentError('');
   }, [savedMovies]);
 
   const getSearchMovies = (searchWord, isShortMovies) => {
     const filterSearchMovies = filterKeyMovies(savedMovies, searchWord, isShortMovies);
     filterSearchMovies.length === 0
-      ? setErrorMessage('Ничего не найдено')
-      : setErrorMessage('');
+      ? setCurrentError(SearchMessageErr.NOT_FOUND)
+      : setCurrentError('');
     savedMovies.length === 0
-      ? setErrorMessage('Нет сохраненных филльмов')
-      : setErrorMessage('');
+      ? setCurrentError(SearchMessageErr.NOT_SAVED)
+      : setCurrentError('');
       setSearchMovies(filterSearchMovies);
   };
 
@@ -60,10 +61,11 @@ const SavedMovies = () => {
       <SearchForm
         handleSearchMovies={handleSearchMovies}
         handleCheckboxClick={handleCheckboxClick}
+        searchErr={setCurrentError}
       />
       {
-        (errorMessage !== '') 
-            ? <span className='movies__error'>{errorMessage}</span>
+        (currentError !== '') 
+            ? <span className='movies__error'>{currentError}</span>
             : <MoviesCardList searchMovies={searchMovies}/>
       }
     </main>
