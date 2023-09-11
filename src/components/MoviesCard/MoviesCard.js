@@ -37,7 +37,7 @@ const MoviesCard = ({ movie, saveState }) => {
       .addSaveMovie(movie)
       .then((dataMovies) => {
         // console.log(dataMovies);
-        setSavedMovies([...savedMovies, dataMovies]);
+        setSavedMovies([...savedMovies, dataMovies.movie]);
         setIsSaved(true);
       })
       .catch((err) => {

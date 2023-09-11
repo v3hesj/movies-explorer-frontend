@@ -73,10 +73,6 @@
   transition: .3s ease-in;
 }
 
-.profile__input::placeholder {
-  color: #FFF;
-}
-
 .profile__input:hover {
   background-color: #3a3a3a;
 }
