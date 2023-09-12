@@ -20,12 +20,16 @@ import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
   const [currentError, setCurrentError]= useState('');
 
+  const localCurrentUser = JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+  const [isLoggedIn, setIsLoggedIn] = useState(localCurrentUser);
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -120,6 +124,11 @@ function App() {
     navigate('/');
     setIsLoggedIn(false);
     setIsLoading(false);
+    setCurrentUser(null);
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('localMovies');
+    localStorage.removeItem('localKeyWord');
+    localStorage.removeItem('checkboxIsShort');
   }
 
   return (
@@ -161,7 +170,7 @@ function App() {
           <Route 
             path='/profile'
             element={
-              <ProtectedRoute isLoading={isLoading} isLoggedIn={isLoggedIn}>
+              <ProtectedRoute isLoading={isLoading}  isLoggedIn={isLoggedIn}>
                 <Header
                  isLoggedIn = {isLoggedIn}
                 />

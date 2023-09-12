@@ -14,9 +14,7 @@ const MoviesCardList = ({ searchMovies }) => {
   const [listMoviesPartMore, setListMoviesPartMore] = useState(0);
 //  console.log(searchMovies);
   useEffect (() => {
-    window.addEventListener('resize', () => {
-      setTimeout(() => setWindowWidth(window.innerWidth), 1000);
-    })
+    window.addEventListener('resize', windowsResize)
     if (windowWidth > sizeWindow.desk) {
       setListMoviesPart(rowCard.desk);
       setListMoviesPartMore(rowCardMore.desk);
@@ -29,11 +27,13 @@ const MoviesCardList = ({ searchMovies }) => {
     }
 
     return () =>
-      window.removeEventListener('resize', () => {
-        setTimeout(() => setWindowWidth(window.clientWidth), 1000);
-      });
+      window.removeEventListener('resize', windowsResize);
   },[searchMovies.length, windowWidth]);
 
+  const windowsResize = () => {
+    setTimeout(() => setWindowWidth(window.clientWidth), 1000);
+  }
+  
   useEffect (() => {
     switch(pathname) {
       case '/movies':

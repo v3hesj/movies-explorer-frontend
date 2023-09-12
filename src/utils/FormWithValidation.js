@@ -21,14 +21,10 @@ function useFormWithValidation({initValues} = {}) {
     //       ? target.setCustomValidity('Некорректный email')
     //       : target.setCustomValidity('')
     if(name === "email")
-    {
-      validator.validate(value);
-      console.log(value,validator.validate(value),isEmail(value));
       !isEmail(value)
         ? target.setCustomValidity('Некорректный email')
         : target.setCustomValidity('')
 
-}
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());

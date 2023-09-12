@@ -1,6 +1,6 @@
 import './Profile.css';
 import useFormWithValidation from '../../utils/FormWithValidation';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
 import { mainApi } from '../../utils/MainApi';
@@ -42,7 +42,7 @@ const Profile = ({ handleSignout }) => {
       .then((data) => {
         setIsEdit(false);
         setCurrentUser({
-          username: data.user.name,
+          name: data.user.name,
           email: data.user.email,
         })
         setCurrentError(RequestConfirm.SUCCESS);
@@ -63,10 +63,14 @@ const Profile = ({ handleSignout }) => {
       })
       .finally(() => setIsLoading(false))
   }
+  useEffect(() => {
+    values.username = currentUser.name;
+    values.email = currentUser.email;
+  },[currentUser.name,currentUser.email])
 
   return (
     <section className='profile'>
-      <h1 className='profile__title'>Привет, {`${currentUser.username || currentUser.name}!`}</h1>
+      <h1 className='profile__title'>Привет, {`${currentUser.name}!`}</h1>
       <form className='profile__form' onSubmit={handleSubmit}>
         <div className='profile__block'>
             <label htmlFor="name" className="profile__label">Имя</label>

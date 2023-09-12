@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import Preloader from '../Preloader/Preloader';
 
 const ProtectedRoute = ({ children, isLoading, isLoggedIn }) => {
-  // console.log(isLoggedIn);
   if (isLoading)
     return <Preloader />;
   return isLoggedIn ? children : <Navigate to='/' />
