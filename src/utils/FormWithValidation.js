@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import isEmail from 'validator/lib/isEmail'
 
 function useFormWithValidation({initValues} = {}) {
   const [values, setValues] = React.useState(initValues || {});
@@ -14,7 +15,12 @@ function useFormWithValidation({initValues} = {}) {
       target.validity.patternMismatch
         ? target.setCustomValidity('Поле должно содержать только латиницу, кириллицу, пробел или дефис')
         : target.setCustomValidity('')
-  
+    if(name === "email")
+      !isEmail(value)
+        ? target.setCustomValidity('Некорректный email')
+        : target.setCustomValidity('')
+
+
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());

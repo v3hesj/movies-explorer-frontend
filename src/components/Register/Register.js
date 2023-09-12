@@ -51,6 +51,7 @@ const Register = ({ currentError, handleRegister, isLoading } ) => {
           onChange={handleChange} 
           minLength="8"
           maxLength="40"
+          // pattern='^[^\s@]+@[^\s@]+\.[^\s@]+$'
           placeholder="Введите email" />
         <span className='form__error'>{errors.email}</span>
       </label>
