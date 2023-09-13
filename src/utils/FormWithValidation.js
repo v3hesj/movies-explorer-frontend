@@ -21,14 +21,14 @@ function useFormWithValidation({initValues} = {}) {
     //       ? target.setCustomValidity('Некорректный email')
     //       : target.setCustomValidity('')
     if(name === "email")
-      !isEmail(value)
+      !isEmail(value) || target.validity.patternMismatch
         ? target.setCustomValidity('Некорректный email')
         : target.setCustomValidity('')
 
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
-    // console.log(name,value);
+    // console.log(name,value,errors);
   };
 
   const resetForm = useCallback(

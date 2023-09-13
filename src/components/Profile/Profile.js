@@ -20,10 +20,16 @@ const Profile = ({ handleSignout }) => {
   };
 
   const { values, handleChange, errors, isValid } = useFormWithValidation({ initValues });
-    
+
+  useEffect(() => {
+    values.username = currentUser.name;
+    values.email = currentUser.email;
+  },[currentUser.name,currentUser.email])
+  
   function handleEdit(e) {
     e.preventDefault();
     setIsEdit(true);
+    setCurrentError('');
   }
 
   const buttonSaveActive = () => {
@@ -63,10 +69,6 @@ const Profile = ({ handleSignout }) => {
       })
       .finally(() => setIsLoading(false))
   }
-  useEffect(() => {
-    values.username = currentUser.name;
-    values.email = currentUser.email;
-  },[currentUser.name,currentUser.email])
 
   return (
     <section className='profile'>
@@ -84,6 +86,7 @@ const Profile = ({ handleSignout }) => {
               minLength="3"
               maxLength="40"
               onChange={handleChange}
+              pattern='^[a-zA-ZА-Яа-яЁё\s\-]+$'
               placeholder={initValues.username}
               disabled={isLoading || !isEdit} />
           </div>
@@ -99,6 +102,7 @@ const Profile = ({ handleSignout }) => {
               minLength="8"
               maxLength="40"
               onChange={handleChange}
+              pattern='^[^\s@]+@[^\s@]+\.[^\s@]+$'
               placeholder={initValues.email}
               disabled={isLoading || !isEdit} />
         </div>
@@ -107,7 +111,7 @@ const Profile = ({ handleSignout }) => {
 
         {isEdit
           ?
-          <button type='submit' className={`profile__button-save ${!buttonSaveActive() && 'profile__button-save_disabled'}`}>Сохранить</button>
+          <button type='submit' disabled={!buttonSaveActive()} className={`profile__button-save ${!buttonSaveActive() && 'profile__button-save_disabled'}`}>Сохранить</button>
           :
           <button type='button' className='profile__button-edit' onClick={handleEdit}>Редактировать</button>
         }

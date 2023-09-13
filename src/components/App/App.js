@@ -67,7 +67,6 @@ function App() {
     mainApi
       .authorize(email, password)
       .then((res) => {
-        setCurrentError(RequestConfirm.SUCCESS);
         localStorage.setItem('jwt', res.userToken);
         // console.log(localStorage.getItem('jwt'));
         setIsLoggedIn(true);
@@ -93,6 +92,7 @@ function App() {
 
   const handleRegister = (name, email, password) => {
     setIsLoading(true);
+    setCurrentError('');
     mainApi
       .register(name, email, password)
       .then(() => {
