@@ -1,0 +1,18 @@
+export const imagesUrl = 'https://api.nomoreparties.co';
+
+export default function apiTranslator(movie) {
+  return {
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: `${imagesUrl}${movie.image.url}`,
+      trailerLink: movie.trailerLink,
+      thumbnail: `${imagesUrl}${movie.image.url}`,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    }
+  }
+
