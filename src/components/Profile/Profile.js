@@ -12,8 +12,8 @@ const Profile = ({ handleSignout }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
-  const [currentError, setCurrentError]= useState('');
-
+  const [currentError, setCurrentError] = useState('');
+  // const [validError, setValidError] = useState('&nbsp;');
   const initValues = {
     username: currentUser.name,
     email: currentUser.email,
@@ -31,6 +31,10 @@ const Profile = ({ handleSignout }) => {
     setIsEdit(true);
     setCurrentError('');
   }
+// console.log(errors.username,'validError',validError);
+//   useEffect(() => {
+//     setValidError(errors.username);
+//   },[errors.username, errors.email])
 
   const buttonSaveActive = () => {
     return ((values.username !== initValues.username || values.email !== initValues.email) && isValid && !isLoading)
@@ -74,7 +78,8 @@ const Profile = ({ handleSignout }) => {
     <section className='profile'>
       <h1 className='profile__title'>Привет, {`${currentUser.name}!`}</h1>
       <form className='profile__form' onSubmit={handleSubmit}>
-        <div className='profile__block'>
+        <div className='profile__container'>
+          <div className='profile__block'>
             <label htmlFor="name" className="profile__label">Имя</label>
             <input
               className="profile__input"
@@ -90,6 +95,10 @@ const Profile = ({ handleSignout }) => {
               placeholder={initValues.username}
               disabled={isLoading || !isEdit} />
           </div>
+          <p className='profile__error-valid'>{errors.username}</p>
+        </div>
+
+        <div className='profile__container'>
           <div className='profile__block'>
             <label htmlFor="email" className="profile__label">E-mail</label>
             <input
@@ -105,6 +114,8 @@ const Profile = ({ handleSignout }) => {
               pattern='^[^\s@]+@[^\s@]+\.[^\s@]+$'
               placeholder={initValues.email}
               disabled={isLoading || !isEdit} />
+          </div>
+          <p className='profile__error-valid'>{errors.email}</p>
         </div>
         {isLoading ? <Preloader /> : ''}
         <span className='profile__error'>{currentError}</span>
